@@ -9,7 +9,7 @@ $detailfoto = $ambilfoto->fetch_assoc();
 
 $namafilefoto = $detailfoto['nama_produk_foto'];
 // Hapus namafilefoto
-unlink("../assets/images" . $namafilefoto);
+unlink("./assets/images" . $namafilefoto);
 
 // echo "<pre>";
 // print_r($namafilefoto);

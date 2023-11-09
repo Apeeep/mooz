@@ -1,11 +1,5 @@
-﻿<?php
-session_start();
+<?php
 include './config/connection.php';
-
-if (!isset($_SESSION['admin'])) {
-	header('location:login.php');
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -32,14 +26,44 @@ if (!isset($_SESSION['admin'])) {
 		</div>
 		<div class="content m-5 p-5 rounded-4 bg-body-tertiary">
 			<div class="d-flex flex-column gap-5 justify-content-center align-items-center">
-				<h1 class="fw-bolder border-bottom" style="color: #0077B6;">Welcome to Mooz Camera</h1>
-				<h3 class="w-50 text-center" style="color: #0077B6;">The Mooz Meeting application is a useful tool for businesses, education, or personal purposes that require remote communication through video conferencing. Although the name "Zoom" has been replaced with "Mooz," the basic concept and functionality remain the same, so users will find it familiar to use.</h3>
-				<a href="userslist.php" class="btn gradient-custom-2 text-white border-0 fw-bolder">
-					<h4 class="m-0 p-3"><i class="bi bi-box-arrow-up-right"></i> Go to User List</h4>
-				</a>
+				<h1 class="fw-bolder border-bottom" style="color: #0077B6;">ADD USER</h1>
+				<div class="slide-in-bottom w-50">
+					<form method="POST" enctype="multipart/form-data">
+						<div class="mb-3">
+							<label for="inputName" class="form-label">Name</label>
+							<input type="text" name="name" class="form-control" id="inputName">
+						</div>
+						<div class="mb-3">
+							<label for="inputPassword" class="form-label">Images</label>
+							<input type="file" name="image[]" class="form-control" id="inputPassword" accept="image/jpg, image/png, image/jpeg, image/svg">
+						</div>
+						<button name="addusers" class="btn gradient-custom-2 border-0 text-white fw-bolder">Submit</button>
+					</form>
+				</div>
 			</div>
+
 		</div>
 	</div>
+	<?php
+	if (isset($_POST["addusers"])) {
+
+		$imagename = $_FILES["image"]["name"];
+		$imagelocation = $_FILES["image"]["tmp_name"];
+		move_uploaded_file($imagelocation[0], "./images/" . $imagename[0]);
+		$result = $connection->query("INSERT INTO users VALUES('', '$_POST[name]', '$imagename[0]')");
+		$users_recently = $connection->insert_id;
+
+		foreach ($imagename as $key => $recent_name) {
+			$recent_location = $imagelocation[$key];
+			move_uploaded_file($recent_location, "./images/" . $recent_name);
+			$result_now = $connection->query("INSERT INTO users_img(id_users, users_img_name) VALUES('$users_recently','$recent_name')");
+		}
+
+		if ($result and $result_now) {
+			echo "<script>alert('Data added successfully');window.location='userslist.php';</script>";
+		}
+	}
+	?>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
