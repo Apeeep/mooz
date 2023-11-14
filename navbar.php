@@ -14,6 +14,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="meeting.php" target="_blank">Meeting Room</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="presentation.php" target="_blank">Presentation Room</a>
+                </li>
             </ul>
             <div>
                 <a href="logout.php" class="btn gradient-custom-2 border-0 px-4 text-white fw-bold">LOGOUT</a>

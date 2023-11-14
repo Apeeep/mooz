@@ -10,7 +10,7 @@ include './config/connection.php';
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zoom Meeting</title>
+  <title>Zoom Meeting Presentation</title>
   <link rel="shortcut icon" href="./assets/img/Camera.png" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -82,19 +82,19 @@ include './config/connection.php';
 
       <!-- Content Middle -->
 
-      <div class="cBotMid d-flex justify-content-between align-items-center gap-2 h-100">
+      <div class="cBotMid d-flex justify-content-center align-items-center gap-2 h-100">
         <div class="cBMLeft h-100 d-flex align-items-center">
-          <span class="px-4 position-relative d-flex align-items-center justify-content-center" style="background-color: #191919">
-            <embed class="mx-2 my-5" src="./assets/img/pageChangeMid.svg" style="color: #000">
-            <p class="m-3 position-absolute bottom-0" style="color: #808080">1/2</p>
-          </span>
+          <img src=./images/presentation/<?php $imagePresentation['presentation_img'] ?> alt="imagePresentation">
         </div>
-        <div class="cBMMid d-flex flex-wrap justify-content-center gap-2">
+        <div class="cBMRight d-flex flex-column justify-content-center gap-2">
+          <span class="d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-caret-up" style="color: "></i>
+          </span>
           <?php
           $get = $connection->query("SELECT * FROM users");
-          for ($i = 0; $i < 25 && ($userData = $get->fetch_assoc()); $i++) :
+          for ($i = 0; $i < 5 && ($userData = $get->fetch_assoc()); $i++) :
           ?>
-            <div id="card" class="position-relative col-2" style="background-color: #222222;">
+            <div id="card" class="position-relative" style="background-color: #222222;">
             <?php if (!empty($userData['users_img'])) : ?>
               <img src="./images/<?= $userData['users_img']; ?>" alt="<?= $userData['users_name']; ?>" class="w-100 h-100 object-fit-contain">
             <?php else : ?>
@@ -108,12 +108,6 @@ include './config/connection.php';
               </span>
             </div>
           <?php endfor; ?>
-        </div>
-        <div class="cBMRight">
-          <span class="px-4 position-relative d-flex align-items-center justify-content-center" style="background-color: #191919">
-            <embed class="mx-2 my-5" src="./assets/img/pageChangeMid.svg" style="color: #000; transform: scaleX(-1);">
-            <p class="m-3 position-absolute bottom-0" style="color: #808080">1/2</p>
-          </span>
         </div>
       </div>
 
